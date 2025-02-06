@@ -1,0 +1,137 @@
+<div class="registration-dialog">
+    <h2 mat-dialog-title>Register New Patient</h2>
+    
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <mat-dialog-content>
+        <div class="form-grid">
+          <!-- Personal Information -->
+          <div class="form-section">
+            <h3>Personal Information</h3>
+            
+            <mat-form-field appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstName" required>
+              <mat-error *ngIf="registrationForm.get('firstName')?.hasError('required')">
+                First name is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="lastName" required>
+              <mat-error *ngIf="registrationForm.get('lastName')?.hasError('required')">
+                Last name is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" formControlName="email" required>
+              <mat-error *ngIf="registrationForm.get('email')?.hasError('required')">
+                Email is required
+              </mat-error>
+              <mat-error *ngIf="registrationForm.get('email')?.hasError('email')">
+                Please enter a valid email
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" formControlName="password" required>
+              <mat-error *ngIf="registrationForm.get('password')?.hasError('required')">
+                Password is required
+              </mat-error>
+              <mat-error *ngIf="registrationForm.get('password')?.hasError('minlength')">
+                Password must be at least 6 characters
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Phone Number</mat-label>
+              <input matInput formControlName="phoneNumber" required>
+              <mat-error *ngIf="registrationForm.get('phoneNumber')?.hasError('required')">
+                Phone number is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+  
+          <!-- Medical Information -->
+          <div class="form-section">
+            <h3>Medical Information</h3>
+            
+            <mat-form-field appearance="outline">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" required>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="registrationForm.get('dateOfBirth')?.hasError('required')">
+                Date of birth is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Gender</mat-label>
+              <mat-select formControlName="gender" required>
+                <mat-option value="male">Male</mat-option>
+                <mat-option value="female">Female</mat-option>
+                <mat-option value="other">Other</mat-option>
+              </mat-select>
+              <mat-error *ngIf="registrationForm.get('gender')?.hasError('required')">
+                Gender is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Blood Group</mat-label>
+              <mat-select formControlName="bloodGroup">
+                <mat-option value="A+">A+</mat-option>
+                <mat-option value="A-">A-</mat-option>
+                <mat-option value="B+">B+</mat-option>
+                <mat-option value="B-">B-</mat-option>
+                <mat-option value="AB+">AB+</mat-option>
+                <mat-option value="AB-">AB-</mat-option>
+                <mat-option value="O+">O+</mat-option>
+                <mat-option value="O-">O-</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+  
+          <!-- Emergency Contact -->
+          <div class="form-section" formGroupName="emergencyContact">
+            <h3>Emergency Contact</h3>
+            
+            <mat-form-field appearance="outline">
+              <mat-label>Contact Name</mat-label>
+              <input matInput formControlName="name" required>
+              <mat-error *ngIf="registrationForm.get('emergencyContact.name')?.hasError('required')">
+                Emergency contact name is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Relationship</mat-label>
+              <input matInput formControlName="relationship" required>
+              <mat-error *ngIf="registrationForm.get('emergencyContact.relationship')?.hasError('required')">
+                Relationship is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Contact Phone</mat-label>
+              <input matInput formControlName="phoneNumber" required>
+              <mat-error *ngIf="registrationForm.get('emergencyContact.phoneNumber')?.hasError('required')">
+                Emergency contact phone is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-dialog-content>
+  
+      <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false" [disabled]="loading">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+          {{loading ? 'Registering...' : 'Register Patient'}}
+        </button>
+      </mat-dialog-actions>
+    </form>
+  </div>

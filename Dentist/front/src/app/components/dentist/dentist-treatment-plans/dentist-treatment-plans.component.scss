@@ -1,0 +1,276 @@
+.treatment-plans-container {
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .plans-card {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+
+    mat-card-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      margin: 0;
+
+      mat-card-title {
+        color: var(--text-primary);
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin: 0;
+      }
+    }
+
+    mat-card-content {
+      padding: 1.25rem;
+
+      .loading-state {
+        padding: 1rem 0;
+      }
+
+      mat-accordion {
+        .mat-expansion-panel {
+          background-color: var(--surface-color);
+          border: 1px solid var(--border-color);
+          border-radius: 8px !important;
+          margin-bottom: 1rem;
+          box-shadow: var(--shadow-sm) !important;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          ::ng-deep {
+            .mat-expansion-panel-header {
+              height: 64px;
+              padding: 0 1.25rem;
+
+              .mat-expansion-panel-header-title {
+                color: var(--text-primary);
+                align-items: center;
+                gap: 1rem;
+
+                mat-chip-set {
+                  .mdc-evolution-chip {
+                    &.mat-primary {
+                      background-color: var(--primary-color);
+                      color: white;
+                    }
+                    &.mat-accent {
+                      background-color: var(--success-color);
+                      color: white;
+                    }
+                    &.mat-warn {
+                      background-color: var(--error-color);
+                      color: white;
+                    }
+                  }
+                }
+              }
+
+              .mat-expansion-panel-header-description {
+                color: var(--text-secondary);
+                font-weight: 500;
+                margin: 0;
+              }
+            }
+
+            .mat-expansion-panel-body {
+              padding: 1.25rem;
+            }
+          }
+
+          .plan-details {
+            display: grid;
+            gap: 1.5rem;
+
+            .plan-info {
+              .info-row {
+                display: grid;
+                grid-template-columns: 120px 1fr;
+                gap: 1rem;
+                margin-bottom: 0.5rem;
+
+                .label {
+                  color: var(--text-secondary);
+                  font-weight: 500;
+                }
+
+                .value {
+                  color: var(--text-primary);
+                }
+              }
+            }
+
+            .progress-section {
+              .progress-header {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 0.5rem;
+                color: var(--text-secondary);
+                font-weight: 500;
+              }
+
+              ::ng-deep {
+                .mat-mdc-progress-bar {
+                  border-radius: 4px;
+                  height: 8px;
+                }
+              }
+            }
+
+            .procedures-list {
+              h4 {
+                color: var(--text-primary);
+                font-size: 1rem;
+                font-weight: 500;
+                margin: 0 0 1rem;
+              }
+
+              .procedure-item {
+                background-color: var(--background-secondary);
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                padding: 1rem;
+                margin-bottom: 0.75rem;
+                transition: all 0.3s ease;
+
+                &:hover {
+                  transform: translateY(-2px);
+                  box-shadow: var(--shadow-sm);
+                }
+
+                .procedure-info {
+                  .procedure-header {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    margin-bottom: 0.5rem;
+
+                    .procedure-name {
+                      color: var(--text-primary);
+                      font-weight: 500;
+                    }
+                  }
+
+                  .procedure-details {
+                    display: flex;
+                    gap: 1rem;
+                    color: var(--text-secondary);
+                    font-size: 0.875rem;
+                    margin-bottom: 0.5rem;
+
+                    .cost {
+                      font-weight: 500;
+                    }
+                  }
+
+                  .description {
+                    color: var(--text-secondary);
+                    font-size: 0.875rem;
+                    margin: 0;
+                  }
+                }
+
+                .procedure-actions {
+                  display: flex;
+                  gap: 0.5rem;
+                  margin-top: 1rem;
+                  padding-top: 0.75rem;
+                  border-top: 1px solid var(--border-color);
+
+                  button {
+                    color: var(--text-secondary);
+
+                    &[color="accent"] {
+                      color: var(--primary-color);
+                    }
+
+                    &:hover {
+                      background-color: var(--surface-hover);
+                    }
+                  }
+                }
+              }
+            }
+
+            .plan-actions {
+              display: flex;
+              justify-content: flex-end;
+              padding-top: 1rem;
+              border-top: 1px solid var(--border-color);
+
+              button {
+                &[color="warn"] {
+                  color: var(--error-color);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 4rem 1rem;
+        color: var(--text-secondary);
+
+        mat-icon {
+          font-size: 3.5rem;
+          width: 3.5rem;
+          height: 3.5rem;
+          margin-bottom: 1.25rem;
+          color: var(--text-disabled);
+        }
+
+        h3 {
+          color: var(--text-primary);
+          font-size: 1.25rem;
+          font-weight: 500;
+          margin: 0 0 0.5rem;
+        }
+
+        p {
+          margin: 0;
+          color: var(--text-secondary);
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .treatment-plans-container {
+    padding: 1rem;
+
+    .plans-card {
+      mat-card-content {
+        padding: 1rem;
+
+        .procedure-item {
+          flex-direction: column;
+
+          .procedure-actions {
+            justify-content: flex-start;
+            margin-top: 1rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Dark mode specific styles
+:host-context([data-theme='dark']) {
+  .plans-card {
+    .procedures-list {
+      .procedure-item {
+        background-color: var(--background-tertiary-dark);
+      }
+    }
+  }
+}

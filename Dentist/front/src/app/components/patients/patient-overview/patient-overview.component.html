@@ -1,0 +1,118 @@
+<div class="overview-container">
+    <div class="overview-grid">
+      <!-- Personal Information -->
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>Personal Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Date of Birth</span>
+              <span class="value">{{formatDate(patient.dateOfBirth)}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Age</span>
+              <span class="value">{{getAge(patient.dateOfBirth)}} years</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Gender</span>
+              <span class="value">{{patient.gender | titlecase}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Blood Group</span>
+              <span class="value">{{patient.bloodGroup || 'Not specified'}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Phone</span>
+              <span class="value">{{patient.user.phoneNumber}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Email</span>
+              <span class="value">{{patient.user.email}}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+  
+      <!-- Emergency Contact -->
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>Emergency Contact</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Name</span>
+              <span class="value">{{patient.emergencyContact.name}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Relationship</span>
+              <span class="value">{{patient.emergencyContact.relationship}}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Phone</span>
+              <span class="value">{{patient.emergencyContact.phoneNumber}}</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+  
+      <!-- Medical Alerts -->
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>Medical Alerts</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="alerts-section">
+            <h4>Allergies</h4>
+            <div class="chips-container" *ngIf="patient.allergies?.length">
+              <mat-chip-set>
+                <mat-chip *ngFor="let allergy of patient.allergies"
+                        [color]="getAllergySeverityColor(allergy.severity)"
+                        [matTooltip]="allergy.notes || ''"
+                        highlighted>
+                  {{allergy.allergen}}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+            <p *ngIf="!patient.allergies?.length" class="no-data">No known allergies</p>
+          </div>
+  
+          <div class="alerts-section">
+            <h4>Medical Conditions</h4>
+            <div class="chips-container" *ngIf="patient.medicalHistory?.length">
+              <mat-chip-set>
+                <mat-chip *ngFor="let condition of patient.medicalHistory"
+                        [matTooltip]="condition.notes || ''"
+                        color="primary"
+                        highlighted>
+                  {{condition.condition}}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+            <p *ngIf="!patient.medicalHistory?.length" class="no-data">No medical conditions recorded</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+  
+      <!-- Treatment Summary -->
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>Treatment Summary</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="summary-stats">
+            <div class="stat-item">
+              <span class="stat-value">{{appointmentCount}}</span>
+              <span class="stat-label">Total Appointments</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">{{documentCount}}</span>
+              <span class="stat-label">Documents</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>

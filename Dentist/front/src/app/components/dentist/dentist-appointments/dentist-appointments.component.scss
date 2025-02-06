@@ -1,0 +1,221 @@
+.appointments-container {
+  padding: 1rem;
+
+  .appointments-card {
+    background-color: var(--surface-color);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+
+    mat-card-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 0;
+
+      mat-card-title {
+        color: var(--text-primary);
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin: 0;
+      }
+
+      button {
+        margin-left: auto;
+      }
+    }
+
+    mat-card-content {
+      padding: 1.25rem;
+
+      .loading-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 3rem;
+        
+        p {
+          margin: 1rem 0 0 0;
+          color: var(--text-secondary);
+        }
+      }
+
+      .appointments-list {
+        display: grid;
+        gap: 1rem;
+
+        .appointment-item {
+          background-color: var(--background-secondary);
+          border: 1px solid var(--border-color);
+          border-radius: 12px;
+          padding: 1.25rem;
+          transition: all 0.3s ease;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+          }
+
+          .appointment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+
+            .appointment-type {
+              display: flex;
+              align-items: center;
+              gap: 0.75rem;
+              color: var(--text-primary);
+              font-weight: 500;
+
+              mat-icon {
+                &.checkup { color: var(--success-color); }
+                &.treatment { color: var(--primary-color); }
+                &.emergency { color: var(--error-color); }
+                &.consultation { color: var(--info-color); }
+              }
+            }
+
+            ::ng-deep mat-chip-set {
+              .mdc-evolution-chip {
+                background-color: var(--surface-color);
+                border: 1px solid var(--border-color);
+
+                &.scheduled {
+                  background-color: var(--info-color);
+                  color: white;
+                }
+                
+                &.completed {
+                  background-color: var(--success-color);
+                  color: white;
+                }
+                
+                &.cancelled {
+                  background-color: var(--error-color);
+                  color: white;
+                }
+                
+                &.no-show {
+                  background-color: var(--warning-color);
+                  color: white;
+                }
+
+                .mdc-evolution-chip__icon {
+                  color: inherit;
+                }
+              }
+            }
+          }
+
+          .appointment-details {
+            display: grid;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+
+            .detail-row {
+              display: flex;
+              align-items: center;
+              gap: 0.75rem;
+              color: var(--text-secondary);
+
+              mat-icon {
+                color: var(--text-secondary);
+                font-size: 1.25rem;
+                width: 1.25rem;
+                height: 1.25rem;
+              }
+
+              span {
+                color: var(--text-primary);
+              }
+            }
+          }
+
+          .appointment-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+
+            button {
+              &[color="warn"] {
+                color: var(--error-color);
+              }
+
+              &[color="accent"] {
+                color: var(--primary-color);
+              }
+
+              mat-icon {
+                font-size: 1.25rem;
+                width: 1.25rem;
+                height: 1.25rem;
+              }
+            }
+          }
+        }
+      }
+
+      .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 4rem 1rem;
+        color: var(--text-secondary);
+
+        mat-icon {
+          font-size: 3.5rem;
+          width: 3.5rem;
+          height: 3.5rem;
+          margin-bottom: 1.25rem;
+          color: var(--text-disabled);
+        }
+
+        h3 {
+          margin: 0 0 0.75rem 0;
+          color: var(--text-primary);
+          font-weight: 500;
+        }
+
+        p {
+          margin: 0;
+          color: var(--text-secondary);
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .appointments-container {
+    padding: 0.75rem;
+
+    .appointments-card {
+      mat-card-content {
+        padding: 1rem;
+
+        .appointment-item {
+          padding: 1rem;
+
+          .appointment-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Dark mode specific styles
+:host-context([data-theme='dark']) {
+  .appointments-list {
+    .appointment-item {
+      background-color: var(--background-tertiary-dark);
+    }
+  }
+}

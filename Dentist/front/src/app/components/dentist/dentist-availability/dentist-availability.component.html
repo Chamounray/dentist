@@ -1,0 +1,77 @@
+<div class="dentist-availability-container">
+  <div class="header">
+    <h1>Manage Availability</h1>
+  </div>
+
+  <!-- Availability Form -->
+  <form [formGroup]="availabilityForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Availability Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="date"
+        required
+      >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="availabilityForm.get('date')?.hasError('required')">
+        Date is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Start Time</mat-label>
+      <input matInput type="time" formControlName="startTime" required>
+      <mat-error *ngIf="availabilityForm.get('startTime')?.hasError('required')">
+        Start time is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>End Time</mat-label>
+      <input matInput type="time" formControlName="endTime" required>
+      <mat-error *ngIf="availabilityForm.get('endTime')?.hasError('required')">
+        End time is required
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        {{ editingAvailabilityId ? 'Update' : 'Save' }}
+      </button>
+      <button
+        *ngIf="editingAvailabilityId"
+        mat-button
+        type="button"
+        (click)="resetForm()"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+
+  <!-- List of Existing Availability Entries -->
+  <div class="availability-list">
+    <mat-card *ngFor="let availability of dentistAvailability">
+      <mat-card-content>
+        <div class="availability-info">
+          <span class="availability-date">
+            {{ availability.date | date:'fullDate' }}
+          </span>
+          <span class="availability-time">
+            {{ availability.startTime }} - {{ availability.endTime }}
+          </span>
+        </div>
+        <div class="availability-actions">
+          <button mat-icon-button (click)="editAvailability(availability)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteAvailability(availability)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

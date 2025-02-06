@@ -1,0 +1,118 @@
+<div class="medical-history-container">
+    <!-- Medical Conditions Section -->
+    <mat-card class="history-card">
+      <mat-card-header>
+        <mat-card-title>Medical Conditions</mat-card-title>
+        <button mat-raised-button color="primary" (click)="openAddConditionDialog()">
+          <mat-icon>add</mat-icon>
+          Add Condition
+        </button>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let condition of patient.medicalHistory">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{condition.condition}}
+                <mat-chip-set>
+                  <mat-chip [color]="condition.status === 'active' ? 'warn' : 'primary'"
+                           highlighted>
+                    {{condition.status}}
+                  </mat-chip>
+                </mat-chip-set>
+              </mat-panel-title>
+              <mat-panel-description>
+                Diagnosed: {{formatDate(condition.diagnosedDate)}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+  
+            <div class="condition-details">
+              <div class="detail-item">
+                <span class="label">Condition:</span>
+                <span class="value">{{condition.condition}}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Diagnosed Date:</span>
+                <span class="value">{{formatDate(condition.diagnosedDate)}}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Status:</span>
+                <span class="value">{{condition.status | titlecase}}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Notes:</span>
+                <span class="value">{{condition.notes || 'No notes available'}}</span>
+              </div>
+              <div class="actions">
+                <button mat-icon-button color="warn" 
+                        (click)="deleteCondition(condition._id)"
+                        matTooltip="Delete condition">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+  
+        <div class="no-data" *ngIf="!patient.medicalHistory?.length">
+          <mat-icon>info</mat-icon>
+          <p>No medical conditions recorded</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  
+    <!-- Allergies Section -->
+    <mat-card class="history-card">
+      <mat-card-header>
+        <mat-card-title>Allergies</mat-card-title>
+        <button mat-raised-button color="primary" (click)="openAddAllergyDialog()">
+          <mat-icon>add</mat-icon>
+          Add Allergy
+        </button>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let allergy of patient.allergies">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{allergy.allergen}}
+                <mat-chip-set>
+                  <mat-chip [color]="getSeverityColor(allergy.severity)"
+                           highlighted>
+                    {{allergy.severity}}
+                  </mat-chip>
+                </mat-chip-set>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+  
+            <div class="allergy-details">
+              <div class="detail-item">
+                <span class="label">Allergen:</span>
+                <span class="value">{{allergy.allergen}}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Severity:</span>
+                <span class="value">{{allergy.severity | titlecase}}</span>
+              </div>
+              <div class="detail-item">
+                <span class="label">Notes:</span>
+                <span class="value">{{allergy.notes || 'No notes available'}}</span>
+              </div>
+              <div class="actions">
+                <button mat-icon-button color="warn" 
+                        (click)="deleteAllergy(allergy._id)"
+                        matTooltip="Delete allergy">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+  
+        <div class="no-data" *ngIf="!patient.allergies?.length">
+          <mat-icon>info</mat-icon>
+          <p>No allergies recorded</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>

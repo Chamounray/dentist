@@ -1,0 +1,187 @@
+.dentist-availability-container {
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .header {
+    margin-bottom: 2rem;
+
+    h1 {
+      color: var(--text-primary);
+      font-size: 1.75rem;
+      font-weight: 500;
+      margin: 0;
+    }
+  }
+
+  form {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2rem;
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+
+    .mat-mdc-form-field {
+      width: 100%;
+
+      ::ng-deep {
+        .mat-mdc-form-field-focus-overlay {
+          background-color: var(--surface-hover);
+        }
+
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+          border-color: var(--border-color);
+        }
+
+        .mat-mdc-form-field-label {
+          color: var(--text-secondary);
+        }
+
+        input.mat-mdc-input-element {
+          color: var(--text-primary);
+        }
+      }
+    }
+
+    .form-actions {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 1rem;
+      margin-top: 0.5rem;
+
+      button {
+        min-width: 120px;
+        height: 40px;
+        border-radius: 20px;
+        
+        &[color="primary"] {
+          background-color: var(--primary-color);
+          color: white;
+
+          &:hover {
+            background-color: var(--primary-dark);
+          }
+        }
+
+        &[type="button"] {
+          color: var(--text-secondary);
+
+          &:hover {
+            background-color: var(--surface-hover);
+          }
+        }
+      }
+    }
+  }
+
+  .availability-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+
+    mat-card {
+      background-color: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      mat-card-content {
+        padding: 1.25rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .availability-info {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+
+          .availability-date {
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 1rem;
+          }
+
+          .availability-time {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+          }
+        }
+
+        .availability-actions {
+          display: flex;
+          gap: 0.5rem;
+
+          button {
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+
+            &:hover {
+              color: var(--primary-color);
+              background-color: var(--surface-hover);
+            }
+
+            &:last-child:hover {
+              color: var(--error-color);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .dentist-availability-container {
+    padding: 1rem;
+
+    form {
+      padding: 1rem;
+      grid-template-columns: 1fr;
+
+      .form-actions {
+        flex-direction: column;
+        
+        button {
+          width: 100%;
+        }
+      }
+    }
+
+    .availability-list {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// Dark mode specific styles for datepicker
+:host-context([data-theme='dark']) {
+  ::ng-deep {
+    .mat-calendar {
+      background-color: var(--surface-color);
+      
+      .mat-calendar-body-selected {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+        border-color: var(--primary-color);
+      }
+    }
+  }
+}

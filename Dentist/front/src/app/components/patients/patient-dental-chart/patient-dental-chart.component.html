@@ -1,0 +1,36 @@
+<div class="dental-chart">
+  <div class="legend">
+    <div *ngFor="let condition of conditions | keyvalue" class="legend-item">
+      <div class="color-box" [style.background-color]="condition.value.color"></div>
+      <span>{{ condition.value.name }}</span>
+    </div>
+  </div>
+
+  <div class="teeth-container">
+    <!-- Upper jaw -->
+    <div class="jaw-row upper-jaw">
+      <div *ngFor="let tooth of upperTeeth" 
+           class="tooth" 
+           [class.selected]="selectedTooth?.number === tooth.number"
+           (click)="selectTooth(tooth)">
+        <svg viewBox="0 0 100 100" [attr.fill]="getToothColor(tooth)">
+          <path [attr.d]="toothSvgPath" stroke="black" stroke-width="2"/>
+        </svg>
+        <div class="tooth-number">{{ tooth.number }}</div>
+      </div>
+    </div>
+
+    <!-- Lower jaw -->
+    <div class="jaw-row lower-jaw">
+      <div *ngFor="let tooth of lowerTeeth" 
+           class="tooth" 
+           [class.selected]="selectedTooth?.number === tooth.number"
+           (click)="selectTooth(tooth)">
+        <svg viewBox="0 0 100 100" [attr.fill]="getToothColor(tooth)">
+          <path [attr.d]="toothSvgPath" stroke="black" stroke-width="2"/>
+        </svg>
+        <div class="tooth-number">{{ tooth.number }}</div>
+      </div>
+    </div>
+  </div>
+</div>

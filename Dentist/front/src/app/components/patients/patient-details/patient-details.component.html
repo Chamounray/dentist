@@ -1,0 +1,94 @@
+<div class="patient-details-container">
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="loading">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+  
+    <!-- Patient Details Content -->
+    <ng-container *ngIf="!loading && patient">
+      <!-- Header Section -->
+      <div class="patient-header">
+        <div class="patient-info">
+          <h1>{{formatName(patient)}}</h1>
+          <div class="patient-meta">
+            <span class="meta-item">
+              <mat-icon>cake</mat-icon>
+              {{getAge(patient.dateOfBirth)}} years
+            </span>
+            <span class="meta-item">
+              <mat-icon>phone</mat-icon>
+              {{patient.user.phoneNumber}}
+            </span>
+            <span class="meta-item">
+              <mat-icon>email</mat-icon>
+              {{patient.user.email}}
+            </span>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button mat-raised-button color="primary" [routerLink]="['appointments', 'new']">
+            <mat-icon>event</mat-icon>
+            New Appointment
+          </button>
+          <button mat-raised-button color="accent" [routerLink]="['edit']">
+            <mat-icon>edit</mat-icon>
+            Edit Patient
+          </button>
+        </div>
+      </div>
+  
+      <!-- Tabs Section -->
+      <mat-tab-group animationDuration="0ms" class="patient-tabs">
+        <!-- Overview Tab -->
+        <mat-tab label="Overview">
+          <app-patient-overview 
+            [patient]="patient">
+          </app-patient-overview>
+        </mat-tab>
+  
+        <!-- Medical History Tab -->
+        <mat-tab label="Medical History">
+          <app-patient-medical-history 
+            [patient]="patient">
+          </app-patient-medical-history>
+        </mat-tab>
+  
+        <!-- Treatment Plans Tab -->
+        <mat-tab label="Treatment Plans">
+          <app-patient-treatment-plans 
+            [patientId]="patient._id">
+          </app-patient-treatment-plans>
+        </mat-tab>
+  
+        <!-- Appointments Tab -->
+        <mat-tab label="Appointments">
+          <app-patient-appointments 
+            [patientId]="patient._id">
+          </app-patient-appointments>
+        </mat-tab>
+  
+        <!-- Documents Tab -->
+        <mat-tab label="Documents">
+          <app-patient-documents 
+            [patientId]="patient._id">
+          </app-patient-documents>
+        </mat-tab>
+  
+        <!-- Dental Chart Tab -->
+        <mat-tab label="Dental Chart">
+          <app-patient-dental-chart 
+            [patient]="patient">
+          </app-patient-dental-chart>
+        </mat-tab>
+      </mat-tab-group>
+    </ng-container>
+  
+    <!-- Error State -->
+    <div class="error-container" *ngIf="!loading && !patient">
+      <mat-icon>error_outline</mat-icon>
+      <h2>Patient Not Found</h2>
+      <button mat-raised-button color="primary" routerLink="/patients">
+        Back to Patients List
+      </button>
+    </div>
+  </div>

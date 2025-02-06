@@ -1,0 +1,118 @@
+<div class="treatment-plan-dialog">
+    <h2 mat-dialog-title>Create New Treatment Plan</h2>
+    
+    <form [formGroup]="planForm" (ngSubmit)="onSubmit()">
+      <mat-dialog-content>
+        <!-- Plan Details -->
+        <div class="plan-details">
+          <mat-form-field appearance="outline">
+            <mat-label>Plan Name</mat-label>
+            <input matInput formControlName="name" required>
+            <mat-error *ngIf="planForm.get('name')?.hasError('required')">
+              Plan name is required
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" rows="2"></textarea>
+          </mat-form-field>
+  
+          <div class="date-range">
+            <mat-form-field appearance="outline">
+              <mat-label>Start Date</mat-label>
+              <input matInput [matDatepicker]="startPicker" formControlName="startDate" required>
+              <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+              <mat-datepicker #startPicker></mat-datepicker>
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>End Date</mat-label>
+              <input matInput [matDatepicker]="endPicker" formControlName="endDate">
+              <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+              <mat-datepicker #endPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status" required>
+              <mat-option value="active">Active</mat-option>
+              <mat-option value="completed">Completed</mat-option>
+              <mat-option value="cancelled">Cancelled</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+  
+        <!-- Procedures -->
+        <div class="procedures-section">
+          <div class="section-header">
+            <h3>Procedures</h3>
+            <button type="button" mat-stroked-button color="primary" (click)="addProcedure()">
+              <mat-icon>add</mat-icon>
+              Add Procedure
+            </button>
+          </div>
+  
+          <div class="procedures-list" formArrayName="procedures">
+            <div class="procedure-item" *ngFor="let procedure of procedures.controls; let i = index" [formGroupName]="i">
+              <div class="procedure-header">
+                <span class="procedure-number">{{i + 1}}</span>
+                <button type="button" mat-icon-button color="warn" 
+                        (click)="removeProcedure(i)"
+                        [disabled]="procedures.length === 1"
+                        matTooltip="Remove procedure">
+                  <mat-icon>remove_circle</mat-icon>
+                </button>
+              </div>
+  
+              <mat-form-field appearance="outline">
+                <mat-label>Procedure Name</mat-label>
+                <input matInput formControlName="name" required>
+              </mat-form-field>
+  
+              <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" rows="2"></textarea>
+              </mat-form-field>
+  
+              <div class="procedure-details">
+                <mat-form-field appearance="outline">
+                  <mat-label>Tooth Number</mat-label>
+                  <input matInput formControlName="tooth">
+                </mat-form-field>
+  
+                <mat-form-field appearance="outline">
+                  <mat-label>Cost</mat-label>
+                  <input matInput type="number" formControlName="cost" required>
+                  <span matPrefix>$&nbsp;</span>
+                </mat-form-field>
+  
+                <mat-form-field appearance="outline">
+                  <mat-label>Status</mat-label>
+                  <mat-select formControlName="status" required>
+                    <mat-option value="pending">Pending</mat-option>
+                    <mat-option value="completed">Completed</mat-option>
+                    <mat-option value="cancelled">Cancelled</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+  
+          <div class="total-cost">
+            <span>Total Cost:</span>
+            <span class="amount">${{calculateTotalCost() | number:'1.2-2'}}</span>
+          </div>
+        </div>
+      </mat-dialog-content>
+  
+      <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false" [disabled]="loading">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" 
+                [disabled]="loading || !planForm.valid">
+          {{loading ? 'Creating...' : 'Create Plan'}}
+        </button>
+      </mat-dialog-actions>
+    </form>
+  </div>

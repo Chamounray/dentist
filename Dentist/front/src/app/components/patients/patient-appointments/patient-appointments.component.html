@@ -1,0 +1,75 @@
+<div class="appointments-container">
+    <mat-card class="appointments-card">
+      <mat-card-header>
+        <mat-card-title>Appointments</mat-card-title>
+        <button mat-raised-button color="primary" (click)="openAddAppointmentDialog()">
+          <mat-icon>add</mat-icon>
+          Schedule Appointment
+        </button>
+      </mat-card-header>
+  
+      <mat-card-content>
+        <!-- Loading State -->
+        <div class="loading-state" *ngIf="loading">
+          <mat-spinner diameter="40"></mat-spinner>
+          <p>Loading appointments...</p>
+        </div>
+  
+        <!-- Appointments List -->
+        <div class="appointments-list" *ngIf="!loading && appointments.length">
+          <div class="appointment-item" *ngFor="let appointment of appointments">
+            <div class="appointment-header">
+              <div class="appointment-type">
+                <mat-icon [class]="appointment.type">
+                  {{getTypeIcon(appointment.type)}}
+                </mat-icon>
+                <span>{{appointment.type | titlecase}}</span>
+              </div>
+              <mat-chip-set>
+                <mat-chip [color]="getStatusColor(appointment.status)" highlighted>
+                  <mat-icon>{{getStatusIcon(appointment.status)}}</mat-icon>
+                  {{appointment.status | titlecase}}
+                </mat-chip>
+              </mat-chip-set>
+            </div>
+  
+            <div class="appointment-details">
+              <div class="detail-row">
+                <mat-icon>event</mat-icon>
+                <span>{{formatDate(appointment.date)}}</span>
+              </div>
+              <div class="detail-row">
+                <mat-icon>schedule</mat-icon>
+                <span>{{formatTime(appointment.startTime)}} - {{formatTime(appointment.endTime)}}</span>
+              </div>
+              <div class="detail-row" *ngIf="appointment.notes">
+                <mat-icon>notes</mat-icon>
+                <span>{{appointment.notes}}</span>
+              </div>
+            </div>
+  
+            <div class="appointment-actions">
+              <button mat-icon-button [matTooltip]="'Mark as ' + status"
+                      *ngFor="let status of appointmentStatuses"
+                      [color]="appointment.status === status ? 'accent' : ''"
+                      (click)="updateAppointmentStatus(appointment._id, status)">
+                <mat-icon>{{getStatusIcon(status)}}</mat-icon>
+              </button>
+              <button mat-icon-button color="warn"
+                      matTooltip="Delete appointment"
+                      (click)="deleteAppointment(appointment._id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Empty State -->
+        <div class="empty-state" *ngIf="!loading && !appointments.length">
+          <mat-icon>event_busy</mat-icon>
+          <h3>No Appointments</h3>
+          <p>Schedule a new appointment to get started</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>

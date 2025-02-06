@@ -1,0 +1,39 @@
+<div class="allergy-dialog">
+    <h2 mat-dialog-title>Add New Allergy</h2>
+    
+    <form [formGroup]="allergyForm" (ngSubmit)="onSubmit()">
+      <mat-dialog-content>
+        <mat-form-field appearance="outline">
+          <mat-label>Allergen</mat-label>
+          <input matInput formControlName="allergen" required>
+          <mat-error *ngIf="allergyForm.get('allergen')?.hasError('required')">
+            Allergen is required
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Severity</mat-label>
+          <mat-select formControlName="severity" required>
+            <mat-option *ngFor="let option of severityOptions" [value]="option.value">
+              {{option.label}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="allergyForm.get('severity')?.hasError('required')">
+            Severity is required
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Notes</mat-label>
+          <textarea matInput formControlName="notes" rows="3"></textarea>
+        </mat-form-field>
+      </mat-dialog-content>
+  
+      <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false" [disabled]="loading">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="loading || !allergyForm.valid">
+          {{loading ? 'Adding...' : 'Add Allergy'}}
+        </button>
+      </mat-dialog-actions>
+    </form>
+  </div>

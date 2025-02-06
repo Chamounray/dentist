@@ -1,0 +1,60 @@
+<h2 mat-dialog-title>Tooth {{ data.tooth.number }}</h2>
+    
+    <mat-dialog-content>
+      <div class="conditions-section">
+        <h3>Condition</h3>
+        <mat-chip-listbox>
+          <mat-chip-option
+            *ngFor="let condition of conditions"
+            [selected]="data.tooth.condition === condition.code"
+            [style.background-color]="condition.color"
+            (selectionChange)="updateCondition(condition)">
+            {{ condition.name }}
+          </mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+
+      <div class="treatment-section" *ngIf="data.tooth.condition">
+        <h3>Add Treatment</h3>
+        <mat-form-field appearance="fill">
+          <mat-label>Treatment Type</mat-label>
+          <mat-select [(ngModel)]="newTreatment.type">
+            <mat-option value="filling">Filling</mat-option>
+            <mat-option value="extraction">Extraction</mat-option>
+            <mat-option value="root-canal">Root Canal</mat-option>
+            <mat-option value="crown">Crown</mat-option>
+            <mat-option value="cleaning">Cleaning</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Notes</mat-label>
+          <textarea matInput [(ngModel)]="newTreatment.description"></textarea>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="addTreatment()">
+          Add Treatment
+        </button>
+      </div>
+
+      <div class="history-section" *ngIf="data.tooth.treatments?.length">
+        <h3>Treatment History</h3>
+        <div class="treatment-history">
+          <div *ngFor="let treatment of data.tooth.treatments" class="treatment-item">
+            <div class="treatment-date">
+              {{ treatment.date | date:'mediumDate' }}
+            </div>
+            <div class="treatment-type">
+              {{ treatment.type }}
+            </div>
+            <div class="treatment-description">
+              {{ treatment.description }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Close</button>
+    </mat-dialog-actions>

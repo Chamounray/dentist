@@ -1,0 +1,123 @@
+.allergy-dialog {
+  h2 {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0 0 1.5rem;
+  }
+
+  mat-dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    min-width: 400px;
+    padding: 0 1.5rem;
+
+    mat-form-field {
+      width: 100%;
+
+      ::ng-deep {
+        .mat-mdc-form-field-wrapper {
+          margin: 0;
+        }
+
+        .mat-mdc-text-field-wrapper {
+          background-color: var(--background-secondary);
+        }
+
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+        .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+          border-color: var(--border-color);
+        }
+
+        .mat-mdc-form-field-label {
+          color: var(--text-secondary);
+        }
+
+        .mat-mdc-select-value {
+          color: var(--text-primary);
+        }
+
+        .mat-mdc-select-arrow {
+          color: var(--text-secondary);
+        }
+
+        textarea {
+          min-height: 100px;
+          resize: vertical;
+        }
+      }
+    }
+  }
+
+  mat-dialog-actions {
+    padding: 1.5rem;
+    margin: 1.5rem -1.5rem -1.5rem;
+    border-top: 1px solid var(--border-color);
+    gap: 1rem;
+
+    button {
+      min-width: 100px;
+      border-radius: 20px;
+
+      &[type="submit"] {
+        padding: 0 1.5rem;
+      }
+
+      &:disabled {
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+// Dark theme support
+:host-context([data-theme="dark"]) {
+  .allergy-dialog {
+    mat-form-field {
+      ::ng-deep .mat-mdc-text-field-wrapper {
+        background-color: var(--background-tertiary-dark);
+      }
+    }
+
+    ::ng-deep {
+      .mat-mdc-select-panel {
+        background-color: var(--surface-color);
+        border: 1px solid var(--border-color);
+
+        .mat-mdc-option {
+          color: var(--text-primary);
+
+          &:hover:not(.mat-mdc-option-disabled) {
+            background-color: var(--surface-hover);
+          }
+
+          &.mat-mdc-option-active {
+            background-color: var(--primary-light);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 600px) {
+  .allergy-dialog {
+    mat-dialog-content {
+      min-width: unset;
+      padding: 0 1rem;
+    }
+
+    mat-dialog-actions {
+      padding: 1rem;
+      flex-direction: column;
+      
+      button {
+        width: 100%;
+        margin: 0 !important;
+      }
+    }
+  }
+}

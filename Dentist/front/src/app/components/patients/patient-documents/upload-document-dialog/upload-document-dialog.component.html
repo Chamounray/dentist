@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>Upload Document</h2>
+
+<form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Document Type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let type of documentTypes" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="uploadForm.get('type')?.hasError('required')">
+        Document type is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" placeholder="Enter document title">
+      <mat-error *ngIf="uploadForm.get('title')?.hasError('required')">
+        Title is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Notes</mat-label>
+      <textarea matInput formControlName="notes" rows="3" placeholder="Add any additional notes"></textarea>
+    </mat-form-field>
+
+    <div class="file-upload">
+      <button type="button" mat-stroked-button (click)="fileInput.click()">
+        <mat-icon>attach_file</mat-icon>
+        Select File
+      </button>
+      <input #fileInput type="file" (change)="onFileSelected($event)" 
+             accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+             style="display: none;">
+      <span class="file-name" *ngIf="selectedFile">
+        {{ selectedFile.name }}
+      </span>
+      <div class="file-info">
+        <small>Supported formats: PDF, DOC, DOCX, JPG, PNG (Max size: 5MB)</small>
+      </div>
+    </div>
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate" class="upload-progress"></mat-progress-bar>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button" [disabled]="loading">Cancel</button>
+    <button mat-raised-button color="primary" type="submit" 
+            [disabled]="!uploadForm.valid || !selectedFile || loading">
+      {{loading ? 'Uploading...' : 'Upload'}}
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,168 @@
+.overview-container {
+  padding: 1rem;
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .info-card {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    height: 100%;
+    
+    mat-card-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+
+      mat-card-title {
+        color: var(--text-primary);
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin: 0;
+      }
+    }
+
+    mat-card-content {
+      padding: 1.5rem;
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.25rem;
+
+        .info-item {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+
+          .label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+          }
+
+          .value {
+            color: var(--text-primary);
+            font-size: 1rem;
+            line-height: 1.5;
+          }
+        }
+      }
+
+      .alerts-section {
+        margin-bottom: 2rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        h4 {
+          color: var(--text-primary);
+          font-size: 1rem;
+          font-weight: 500;
+          margin: 0 0 1rem;
+        }
+
+        .chips-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.75rem;
+
+          mat-chip-set {
+            .mdc-evolution-chip {
+              height: 32px;
+              border-radius: 16px;
+              font-size: 0.875rem;
+            }
+          }
+        }
+
+        .no-data {
+          color: var(--text-secondary);
+          font-style: italic;
+          margin: 0;
+          font-size: 0.875rem;
+        }
+      }
+
+      .summary-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1.5rem;
+
+        .stat-item {
+          text-align: center;
+          padding: 1.5rem;
+          background-color: var(--background-secondary);
+          border: 1px solid var(--border-color);
+          border-radius: 12px;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+          }
+
+          .stat-value {
+            display: block;
+            font-size: 2.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+            line-height: 1;
+          }
+
+          .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Dark mode specific styles
+:host-context([data-theme='dark']) {
+  .info-card {
+    .summary-stats .stat-item {
+      background-color: var(--background-tertiary-dark);
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .overview-container {
+    padding: 0.75rem;
+
+    .overview-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .info-card {
+      mat-card-header,
+      mat-card-content {
+        padding: 1rem;
+      }
+
+      .summary-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+
+        .stat-item {
+          padding: 1rem;
+
+          .stat-value {
+            font-size: 1.75rem;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Patient Documents</mat-card-title>
+      <button mat-raised-button color="primary" (click)="openUploadDialog()">
+        <mat-icon>upload</mat-icon>
+        Upload Document
+      </button>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="documents-grid" *ngIf="!loading && documents.length > 0">
+        <mat-card class="document-card" *ngFor="let doc of documents">
+          <mat-card-header>
+            <mat-icon mat-card-avatar>{{getFileIcon(doc.fileUrl)}}</mat-icon>
+            <mat-card-title>{{doc.title}}</mat-card-title>
+            <mat-card-subtitle>{{doc.type}}</mat-card-subtitle>
+          </mat-card-header>
+          
+          <mat-card-content *ngIf="doc.notes">
+            <p>{{doc.notes}}</p>
+          </mat-card-content>
+          
+          <mat-card-actions>
+            <a mat-button 
+               color="primary" 
+               [href]="doc.fileUrl" 
+               download="{{doc.originalName}}"
+               target="_blank">
+              <mat-icon>download</mat-icon>
+              Download
+            </a>
+            <button mat-button color="warn" (click)="confirmDelete(doc._id)">
+              <mat-icon>delete</mat-icon>
+              Delete
+            </button>
+          </mat-card-actions>
+          
+          <mat-card-footer>
+            <small>Uploaded: {{doc.uploadDate | date:'medium'}}</small>
+          </mat-card-footer>
+        </mat-card>
+      </div>
+      
+      <div class="no-documents" *ngIf="!loading && documents.length === 0">
+        <mat-icon>folder_open</mat-icon>
+        <p>No documents uploaded yet</p>
+      </div>
+      
+      <div class="loading-spinner" *ngIf="loading">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+      
+      <div class="error-message" *ngIf="error">
+        {{error}}
+      </div>
+    </mat-card-content>
+  </mat-card>

@@ -1,0 +1,82 @@
+<div class="appointment-dialog">
+  <h2 mat-dialog-title>Schedule New Appointment</h2>
+  
+  <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+    <mat-dialog-content>
+      <!-- Appointment Date with custom filter -->
+      <mat-form-field appearance="outline">
+        <mat-label>Appointment Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="date"
+          [matDatepickerFilter]="filterAvailableDates"
+          (dateChange)="onDateChange()"
+          required
+        >
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="appointmentForm.get('date')?.hasError('required')">
+          Date is required
+        </mat-error>
+      </mat-form-field>
+      
+      <!-- Available Slots Grid -->
+      <div class="available-slots">
+        <h3 *ngIf="!loadingSlots && availableSlots.length">Available Slots</h3>
+        <div *ngIf="loadingSlots" class="loading-slots">
+          <mat-spinner diameter="30"></mat-spinner>
+          <span>Loading available slots...</span>
+        </div>
+        <div *ngIf="!loadingSlots && availableSlots.length === 0">
+          <p>No available slots for this date.</p>
+        </div>
+        <div class="slots-grid" *ngIf="!loadingSlots && availableSlots.length">
+          <button
+            type="button"
+            class="slot-button"
+            *ngFor="let slot of availableSlots"
+            (click)="selectSlot(slot)"
+            [class.selected]="selectedSlot?.startTime === slot.startTime"
+          >
+            {{ formatTime(slot.startTime) }} - {{ formatTime(slot.endTime) }}
+          </button>
+        </div>
+      </div>
+      
+      <!-- Appointment Type -->
+      <mat-form-field appearance="outline">
+        <mat-label>Appointment Type</mat-label>
+        <mat-select formControlName="type" required>
+          <mat-option *ngFor="let type of appointmentTypes" [value]="type.value">
+            {{ type.label }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="appointmentForm.get('type')?.hasError('required')">
+          Appointment type is required
+        </mat-error>
+      </mat-form-field>
+      
+      <!-- Notes -->
+      <mat-form-field appearance="outline">
+        <mat-label>Notes</mat-label>
+        <textarea
+          matInput
+          formControlName="notes"
+          rows="3"
+          placeholder="Add any additional notes or instructions"
+        ></textarea>
+      </mat-form-field>
+    </mat-dialog-content>
+    
+    <mat-dialog-actions align="end">
+      <button mat-button [mat-dialog-close]="false" type="button" [disabled]="loading">
+        Cancel
+      </button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="loading || !appointmentForm.valid">
+        <ng-container *ngIf="!loading">Schedule Appointment</ng-container>
+        <mat-spinner diameter="20" *ngIf="loading"></mat-spinner>
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

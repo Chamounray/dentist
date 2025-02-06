@@ -1,0 +1,213 @@
+<div class="dashboard-container">
+  <!-- Loading Spinner -->
+  <div class="loading-container" *ngIf="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-message" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-content" *ngIf="!loading && !error && analytics">
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <div class="stat-icon">
+            <mat-icon>people</mat-icon>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Total Patients</span>
+            <span class="stat-value">{{ formatNumber(analytics.totalPatients) }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <div class="stat-icon">
+            <mat-icon>event</mat-icon>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Today's Appointments</span>
+            <span class="stat-value">{{ formatNumber(analytics.todayAppointments) }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <div class="stat-icon">
+            <mat-icon>pending_actions</mat-icon>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Pending Treatments</span>
+            <span class="stat-value">{{ formatNumber(analytics.pendingTreatments) }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <mat-card-content>
+          <div class="stat-icon">
+            <mat-icon>check_circle</mat-icon>
+          </div>
+          <div class="stat-info">
+            <span class="stat-label">Completed Treatments</span>
+            <span class="stat-value">{{ formatNumber(analytics.completedTreatments) }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-grid">
+      <!-- Appointment Status Chart -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Appointment Status Distribution</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ngx-charts-pie-chart
+            [results]="appointmentStatusData"
+            [view]="view"
+            scheme="cool"
+            [gradient]="gradient"
+            [legend]="showLegend"
+            [labels]="showLabels"
+            [doughnut]="isDoughnut"
+            [animations]="true"
+            [tooltipDisabled]="false">
+          </ngx-charts-pie-chart>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Appointments by Type Chart -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Appointments by Type</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ngx-charts-bar-vertical
+            [results]="appointmentsByTypeData"
+            [view]="view"
+            scheme="cool"
+            [gradient]="gradient"
+            [xAxis]="true"
+            [yAxis]="true"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [animations]="true"
+            [tooltipDisabled]="false">
+          </ngx-charts-bar-vertical>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Treatment Procedures Chart -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Treatment Procedures</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ngx-charts-bar-horizontal
+            [results]="treatmentProceduresData"
+            [view]="view"
+            scheme="cool"
+            [gradient]="gradient"
+            [xAxis]="true"
+            [yAxis]="true"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [animations]="true"
+            [tooltipDisabled]="false">
+          </ngx-charts-bar-horizontal>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Monthly Trends Chart -->
+      <mat-card class="chart-card">
+        <mat-card-header>
+          <mat-card-title>Monthly Appointment Trends</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ngx-charts-line-chart
+            [results]="monthlyTrendsData"
+            [view]="view"
+            scheme="cool"
+            [gradient]="gradient"
+            [xAxis]="true"
+            [yAxis]="true"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [animations]="true"
+            [tooltipDisabled]="false">
+          </ngx-charts-line-chart>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <!-- Upcoming Appointments Table -->
+    <div class="appointments-section">
+      <mat-card class="table-card">
+        <mat-card-header>
+          <mat-card-title>Upcoming Appointments</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <table mat-table [dataSource]="upcomingAppointments" class="appointments-table">
+            <!-- Date Column -->
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef> Date </th>
+              <td mat-cell *matCellDef="let appointment"> 
+                {{appointment.date | date:'MMM dd, yyyy'}} 
+              </td>
+            </ng-container>
+
+            <!-- Time Column -->
+            <ng-container matColumnDef="time">
+              <th mat-header-cell *matHeaderCellDef> Time </th>
+              <td mat-cell *matCellDef="let appointment"> 
+                {{appointment.startTime}} - {{appointment.endTime}}
+              </td>
+            </ng-container>
+
+            <!-- Patient Column -->
+            <ng-container matColumnDef="patient">
+              <th mat-header-cell *matHeaderCellDef> Patient </th>
+              <td mat-cell *matCellDef="let appointment"> 
+                {{appointment.patientName}}
+              </td>
+            </ng-container>
+
+            <!-- Type Column -->
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef> Type </th>
+              <td mat-cell *matCellDef="let appointment"> 
+                {{appointment.type | titlecase}} 
+              </td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let appointment"> 
+                <span class="status-chip" [class]="appointment.status">
+                  {{appointment.status | titlecase}}
+                </span>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                         showFirstLastButtons
+                         aria-label="Select page of appointments">
+          </mat-paginator>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

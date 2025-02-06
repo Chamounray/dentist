@@ -1,0 +1,118 @@
+<div class="treatment-plans-container">
+    <mat-card class="plans-card">
+      <mat-card-header>
+        <mat-card-title>Treatment Plans</mat-card-title>
+        
+      </mat-card-header>
+  
+      <mat-card-content>
+        <!-- Loading State -->
+        <div class="loading-state" *ngIf="loading">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+  
+        <!-- Treatment Plans List -->
+        <mat-accordion *ngIf="!loading">
+          <mat-expansion-panel *ngFor="let plan of treatmentPlans">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{plan.name}}
+                <mat-chip-set>
+                  <mat-chip [color]="getStatusColor(plan.status)" highlighted>
+                    {{plan.status | titlecase}}
+                  </mat-chip>
+                </mat-chip-set>
+              </mat-panel-title>
+              <mat-panel-description>
+                {{formatCurrency(plan.totalCost)}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+  
+            <!-- Plan Details -->
+            <div class="plan-details">
+              <div class="plan-info">
+                <div class="info-row">
+                  <span class="label">Start Date:</span>
+                  <span class="value">{{formatDate(plan.startDate)}}</span>
+                </div>
+                <div class="info-row" *ngIf="plan.endDate">
+                  <span class="label">End Date:</span>
+                  <span class="value">{{formatDate(plan.endDate)}}</span>
+                </div>
+                <div class="info-row">
+                  <span class="label">Description:</span>
+                  <span class="value">{{plan.description || 'No description provided'}}</span>
+                </div>
+              </div>
+  
+              <!-- Progress Bar -->
+              <div class="progress-section">
+                <div class="progress-header">
+                  <span>Progress</span>
+                  <span>{{calculateProgress(plan)}}%</span>
+                </div>
+                <mat-progress-bar
+                  [value]="calculateProgress(plan)"
+                  [color]="plan.status === 'completed' ? 'accent' : 'primary'">
+                </mat-progress-bar>
+              </div>
+  
+              <!-- Procedures List -->
+              <div class="procedures-list">
+                <h4>Procedures</h4>
+                <div class="procedure-item" *ngFor="let procedure of plan.procedures">
+                  <div class="procedure-info">
+                    <div class="procedure-header">
+                      <span class="procedure-name">{{procedure.name}}</span>
+                      <mat-chip-set>
+                        <mat-chip [color]="getStatusColor(procedure.status)" highlighted>
+                          {{procedure.status | titlecase}}
+                        </mat-chip>
+                      </mat-chip-set>
+                    </div>
+                    <div class="procedure-details">
+                      <span class="cost">{{formatCurrency(procedure.cost)}}</span>
+                      <span class="tooth" *ngIf="procedure.tooth">Tooth: {{procedure.tooth}}</span>
+                    </div>
+                    <p class="description" *ngIf="procedure.description">
+                      {{procedure.description}}
+                    </p>
+                  </div>
+                  <div class="procedure-actions">
+                    <button mat-icon-button [matTooltip]="'Mark as ' + status"
+                            *ngFor="let status of procedureStatuses"
+                            [color]="procedure.status === status ? 'accent' : ''"
+                            (click)="updateProcedureStatus(plan, procedure._id, status)">
+                      <mat-icon>
+                        {{status === 'completed' ? 'check_circle' : 
+                           status === 'pending' ? 'schedule' : 'cancel'}}
+                      </mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Plan Actions -->
+              <div class="plan-actions">
+                <button mat-button color="warn" (click)="deleteTreatmentPlan(plan._id)">
+                  <mat-icon>delete</mat-icon>
+                  Delete Plan
+                </button>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+  
+        <!-- Empty State -->
+        <div class="empty-state" *ngIf="!loading && !treatmentPlans.length">
+          <mat-icon>assignment</mat-icon>
+          <h3>No Treatment Plans</h3>
+          <p>Create a new treatment plan to get started</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+
+
+  

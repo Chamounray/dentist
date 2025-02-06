@@ -1,0 +1,143 @@
+// Custom Properties for Theme Colors
+:root {
+  // Light Theme Colors (Default)
+  --primary-color: #00a6c4; // Dental blue
+  --primary-light: #4dd6ff;
+  --primary-dark: #007a93;
+  
+  --secondary-color: #4caf50; // Healing green
+  --secondary-light: #80e27e;
+  --secondary-dark: #087f23;
+  
+  --accent-color: #ff6b6b; // Soft red for alerts/notifications
+  
+  --background-primary: #ffffff;
+  --background-secondary: #f5f9fa;
+  --background-tertiary: #e8f4f6;
+  
+  --surface-color: #ffffff;
+  --surface-hover: #f0f7f8;
+  
+  --text-primary: #2c3e50;
+  --text-secondary: #546e7a;
+  --text-disabled: #90a4ae;
+  
+  --border-color: #e0e7e9;
+  --divider-color: #eceff1;
+  
+  --error-color: #f44336;
+  --warning-color: #ff9800;
+  --success-color: #4caf50;
+  --info-color: #2196f3;
+  
+  // Dental Chart Specific Colors
+  --tooth-healthy: #ffffff;
+  --tooth-cavity: #ff6b6b;
+  --tooth-filling: #90a4ae;
+  --tooth-crown: #ffd700;
+  --tooth-root-canal: #800000;
+  --tooth-missing: #000000;
+  
+  // Shadow
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+// Dark Theme Colors
+[data-theme='dark'] {
+  --primary-color: #00c6e6;
+  --primary-light: #5df2ff;
+  --primary-dark: #0095b3;
+  
+  --secondary-color: #66bb6a;
+  --secondary-light: #98ee99;
+  --secondary-dark: #338a3e;
+  
+  --accent-color: #ff8a8a;
+  
+  --background-primary: #1a1f2b;
+  --background-secondary: #242a38;
+  --background-tertiary: #2d3546;
+  
+  --surface-color: #2d3546;
+  --surface-hover: #374155;
+  
+  --text-primary: #e0e6ed;
+  --text-secondary: #b0bec5;
+  --text-disabled: #78909c;
+  
+  --border-color: #3d4654;
+  --divider-color: #2d3546;
+  
+  // Dental Chart Colors (adjusted for dark mode)
+  --tooth-healthy: #374155;
+  --tooth-cavity: #ff8a8a;
+  --tooth-filling: #b0bec5;
+  --tooth-crown: #ffd700;
+  --tooth-root-canal: #d32f2f;
+  --tooth-missing: #000000;
+  
+  // Shadow adjustments for dark mode
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+}
+
+// Global Styles
+body {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+// Material Design Overrides
+.mat-mdc-card {
+  background-color: var(--surface-color) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color);
+}
+
+.mat-mdc-button {
+  &.mat-primary {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+  }
+  
+  &.mat-accent {
+    background-color: var(--accent-color) !important;
+    color: white !important;
+  }
+}
+
+// Common Utility Classes
+.bg-primary { background-color: var(--primary-color) !important; }
+.bg-secondary { background-color: var(--secondary-color) !important; }
+.bg-accent { background-color: var(--accent-color) !important; }
+.bg-surface { background-color: var(--surface-color) !important; }
+
+.text-primary { color: var(--text-primary) !important; }
+.text-secondary { color: var(--text-secondary) !important; }
+.text-disabled { color: var(--text-disabled) !important; }
+
+// Dental Chart Specific Classes
+.tooth {
+  &-healthy { background-color: var(--tooth-healthy) !important; }
+  &-cavity { background-color: var(--tooth-cavity) !important; }
+  &-filling { background-color: var(--tooth-filling) !important; }
+  &-crown { background-color: var(--tooth-crown) !important; }
+  &-root-canal { background-color: var(--tooth-root-canal) !important; }
+  &-missing { background-color: var(--tooth-missing) !important; }
+}
+
+// Shadows
+.shadow-sm { box-shadow: var(--shadow-sm) !important; }
+.shadow-md { box-shadow: var(--shadow-md) !important; }
+.shadow-lg { box-shadow: var(--shadow-lg) !important; }
+
+// Transitions
+.theme-transition {
+  transition: all 0.3s ease;
+}

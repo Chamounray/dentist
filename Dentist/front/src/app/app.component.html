@@ -1,0 +1,58 @@
+<mat-sidenav-container class="sidenav-container theme-transition">
+  <mat-sidenav #drawer class="sidenav theme-transition" fixedInViewport
+      [mode]="'side'"
+      [opened]="authService.isAuthenticated()">
+      <mat-toolbar>
+        <span>Menu</span>
+      </mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+      <a mat-list-item routerLink="/patients" routerLinkActive="active">
+        <mat-icon>people</mat-icon>
+        <span>Patients</span>
+      </a>
+      <a mat-list-item routerLink="/dentist-appointments" routerLinkActive="active">
+        <mat-icon>event</mat-icon>
+        <span>Appointments</span>
+      </a>
+      <a mat-list-item routerLink="/dentist-treatment-plans" routerLinkActive="active">
+        <mat-icon>healing</mat-icon>
+        <span>Treatment Plans</span>
+      </a>
+      <a mat-list-item routerLink="/dentist-availability" routerLinkActive="active">
+        <mat-icon>person</mat-icon>
+        <span>Availability</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <button
+        type="button"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="authService.isAuthenticated()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="app-title">Dental Clinic</span>
+      <span class="spacer"></span>
+      <button mat-button *ngIf="!authService.isAuthenticated()" routerLink="/login">
+        <mat-icon>login</mat-icon>
+        <span>Login</span>
+      </button>
+      <button mat-icon-button (click)="themeService.toggleTheme()" matTooltip="Toggle theme">
+        <mat-icon>{{ themeService.isDark() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+      <button mat-button *ngIf="authService.isAuthenticated()" (click)="authService.logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-toolbar>
+    <main class="content theme-transition">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

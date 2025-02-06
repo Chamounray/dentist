@@ -1,0 +1,99 @@
+.sidenav-container {
+    height: 100%;
+    background-color: var(--background-primary);
+    color: var(--text-primary);
+  }
+  
+  .sidenav {
+    width: 250px;
+    background-color: var(--surface-color);
+    border-right: 1px solid var(--border-color);
+    
+    .mat-toolbar {
+      background: var(--primary-color);
+      color: white;
+      font-weight: 500;
+    }
+    
+    mat-nav-list {
+      padding-top: 1rem;
+
+      a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-primary);
+        height: 48px;
+        margin: 4px 8px;
+        border-radius: 8px;
+        padding: 0 16px;
+        transition: all 0.3s ease;
+        
+        mat-icon {
+          color: var(--text-secondary);
+          transition: color 0.3s ease;
+        }
+
+        &:hover {
+          background-color: var(--surface-hover);
+          
+          mat-icon {
+            color: var(--primary-color);
+          }
+        }
+
+        &.active {
+          background-color: var(--primary-light);
+          color: var(--primary-color);
+          
+          mat-icon {
+            color: var(--primary-color);
+          }
+        }
+      }
+    }
+  }
+  
+  .content {
+    padding: 20px;
+    background: var(--background-secondary);
+    min-height: calc(100vh - 64px);
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  mat-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--primary-color) !important;
+    color: white;
+    box-shadow: var(--shadow-sm);
+
+    button {
+      color: white;
+
+      &:hover {
+        background-color: var(--primary-dark);
+      }
+    }
+
+    .app-title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-left: 8px;
+    }
+  }
+
+  // Add responsive adjustments
+  @media (max-width: 600px) {
+    .sidenav {
+      width: 200px;
+    }
+
+    .content {
+      padding: 16px;
+    }
+  }
